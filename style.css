@@ -1,0 +1,728 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --Neutral-900: hsl(0, 0%, 7%);
+    --Neutral-800: hsl(0, 0%, 15%);
+    --Neutral-700: hsl(0, 0%, 22%);
+    --Neutral-500: hsl(240, 3%, 46%);
+    --Neutral-400: hsl(240, 1%, 59%);
+    --Neutral-0: hsl(0, 0%, 100%);
+    --Blue-600: hsl(214, 100%, 55%);
+    --Blue-400: hsl(210, 100%, 65%);
+    --Red-500: hsl(354, 63%, 57%);
+    --Green-500: hsl(140, 63%, 57%);
+    --Yellow-400: hsl(49, 85%, 70%);
+    --radius-pill: 999px;
+    --radius-card: 14px;
+    --radius-btn: 10px;
+}
+
+html {
+    max-width: 1200px;
+    margin-inline: auto;
+    background-color: var(--Neutral-900);
+    color: var(--Neutral-0);
+    padding: 2.5rem;
+    font-family: 'Sora', sans-serif;
+    /* overflow-y: hidden; */
+}
+
+body {
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+:focus-visible {
+    outline: 2px solid var(--Blue-400);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+
+/* ---------- header ---------- */
+
+.top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    position: relative;
+    /* เผื่อ logo ล้นออกนอก header แล้วอยากอ้างอิงกรอบ header แทน */
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    position: relative;
+    width: 10rem;
+    /* จองพื้นที่แนวนอนเท่ากับ logo เดิม กัน personal-best มาชน */
+    flex-shrink: 0;
+    align-self: stretch;
+    /* ให้สูงเท่า top-header ปกติ (ตาม personal-best) */
+}
+
+.logo-title .logo {
+    width: 10rem;
+    height: 10rem;
+    flex-shrink: 0;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.logo-title h1,
+.logo-title .title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.logo-title .subtitle {
+    font-size: .75rem;
+    color: var(--Neutral-400);
+}
+
+.personal-best {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .85rem;
+    color: var(--Neutral-400);
+    white-space: nowrap;
+}
+
+.personal-best img {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.personal-best-result #personal-best-value {
+    color: var(--Neutral-0);
+    font-weight: 700;
+}
+
+
+/* ---------- status bar + selectors ---------- */
+
+.typing-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.status-and-select-difficulty {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 0 .9rem 0;
+    border-bottom: 1px solid var(--Neutral-800);
+    margin-bottom: 2rem;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.status,
+.difficulty-selector,
+.mode-selector {
+    flex-shrink: 0;
+    /* ห้ามหดตัว กันข้อความโดนตัด/บัง */
+}
+
+.status {
+    overflow: visible;
+}
+
+.status>div {
+    white-space: nowrap;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    font-size: .95rem;
+    color: var(--Neutral-400);
+    padding: 0;
+    gap: 0;
+}
+
+.status>div {
+    padding: 0 1rem;
+    border-left: 1px solid var(--Neutral-800);
+}
+
+.status>div:first-child {
+    border-left: none;
+    padding-left: 0;
+}
+
+.font-stats {
+    font-weight: 700;
+    margin-left: .35rem;
+    color: var(--Neutral-0);
+    font-size: 1.05rem;
+}
+
+.accuracy .font-stats {
+    color: var(--Red-500);
+}
+
+.accuracy.perfect .font-stats {
+    color: var(--Green-500);
+}
+
+.time .font-stats {
+    color: var(--Yellow-400);
+}
+
+
+/* difficulty / mode fieldsets */
+
+fieldset {
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    /* ลดจาก .8rem */
+}
+
+.mode-selector {
+    padding-left: 1.4rem;
+    border-left: 1px solid var(--Neutral-800);
+}
+
+fieldset legend {
+    font-size: .85rem;
+    color: var(--Neutral-400);
+    padding: 0;
+    float: left;
+    margin-right: .6rem;
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    /* ลดจาก .6rem */
+}
+
+.difficulty-btn,
+.mode-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .35rem .8rem;
+    /* ลดจาก .45rem 1rem */
+    font-size: .8rem;
+    /* ลดจาก .85rem */
+    font-weight: 600;
+    color: var(--Neutral-0);
+    border: 1px solid var(--Neutral-700);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease, background-color .15s ease;
+    white-space: nowrap;
+}
+
+.difficulty-btn:hover,
+.mode-btn:hover {
+    border-color: var(--Blue-400);
+    color: var(--Blue-400);
+}
+
+
+/* difficulty: selected = outlined blue */
+
+input[name="difficulty"]:checked+.difficulty-btn {
+    border-color: var(--Blue-600);
+    color: var(--Blue-400);
+}
+
+
+/* mode: selected = filled blue */
+
+input[name="mode"]:checked+.mode-btn {
+    background: var(--Blue-600);
+    border-color: var(--Blue-600);
+    color: var(--Neutral-0);
+}
+
+input[name="mode"]:checked+.mode-btn:hover {
+    color: var(--Neutral-0);
+}
+
+input.sr-only:focus-visible+label {
+    outline: 2px solid var(--Blue-400);
+    outline-offset: 3px;
+}
+
+.typing-area {
+    position: relative;
+    min-height: calc(1.55rem * 1.85 * 12);
+}
+
+.typing-text {
+    font-size: 1.55rem;
+    line-height: 1.85;
+    color: var(--Neutral-400);
+    transition: filter .2s ease;
+}
+
+.typing-text.blurred {
+    filter: blur(4px);
+    user-select: none;
+}
+
+.typing-text .char {
+    transition: color .1s ease;
+}
+
+.typing-text .char.correct {
+    color: var(--Green-500);
+}
+
+.typing-text .char.incorrect {
+    color: var(--Red-500);
+    text-decoration: underline;
+    text-decoration-color: var(--Red-500);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+.typing-text .char.current {
+    background-color: var(--Neutral-700);
+    border-radius: 3px;
+}
+
+.display-start {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .9rem;
+    text-align: center;
+}
+
+.display-start p {
+    font-weight: 700;
+    font-size: .95rem;
+}
+
+.start-typing {
+    background: var(--Blue-600);
+    color: var(--Neutral-0);
+    border: none;
+    padding: .9rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-btn);
+    transition: background-color .15s ease;
+}
+
+.start-typing:hover {
+    background: var(--Blue-400);
+}
+
+
+/* ---------- restart button ---------- */
+
+.restart-test {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    align-self: center;
+    margin: 1.5rem 0;
+    padding: .75rem 1.5rem;
+    background: var(--Neutral-800);
+    color: var(--Neutral-0);
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: .9rem;
+    font-weight: 700;
+    transition: background-color .15s ease;
+}
+
+.restart-test:hover {
+    background: var(--Neutral-700);
+}
+
+.restart-test img {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+/* ---------- results screens (shared) ---------- */
+
+#display-completed,
+#display-highscore,
+#display-firsttyping {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 1rem 5rem;
+    overflow: hidden;
+}
+
+
+/* เพิ่มขนาด font เฉพาะหน้า highscore และ firsttyping */
+
+#display-highscore .score-label,
+#display-firsttyping .score-label {
+    font-size: 1.05rem;
+    /* เดิม .9rem */
+}
+
+#display-highscore .score-value,
+#display-firsttyping .score-value {
+    font-size: 1.85rem;
+    /* เดิม 1.5rem */
+}
+
+.result-icon {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+
+/* green ring behind check icon (Test Complete / Baseline Established) */
+
+#result-icon,
+#display-firsttyping-result-icon {
+    padding: 1rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(140, 63%, 57%, .18) 0%, transparent 70%);
+}
+
+#display-completed h2,
+#display-highscore h2,
+#display-firsttyping h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+
+#display-completed p#result-subtitle,
+#display-highscore p,
+#display-firsttyping p {
+    color: var(--Neutral-400);
+    font-size: 1rem;
+    max-width: 30rem;
+    margin-bottom: 2.5rem;
+}
+
+.typing-score {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.score-box {
+    border: 1px solid var(--Neutral-800);
+    border-radius: var(--radius-card);
+    padding: 1.1rem 1.75rem;
+    min-width: 9rem;
+    text-align: left;
+}
+
+.score-label {
+    color: var(--Neutral-400);
+    font-size: .9rem;
+    margin-bottom: .4rem;
+}
+
+.score-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.score-accuracy {
+    color: var(--Red-500);
+}
+
+.score-accuracy.perfect {
+    color: var(--Green-500);
+}
+
+.chars-correct {
+    color: var(--Green-500);
+}
+
+.chars-incorrect {
+    color: var(--Red-500);
+}
+
+#go-typing-again,
+#beat-this-score,
+#firsttyping {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    background: var(--Neutral-0);
+    color: var(--Neutral-900);
+    border: none;
+    padding: .9rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-btn);
+    transition: opacity .15s ease;
+}
+
+#go-typing-again:hover,
+#beat-this-score:hover,
+#firsttyping:hover {
+    opacity: .85;
+}
+
+#go-typing-again img,
+#beat-this-score img,
+#firsttyping img {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+/* decorative marks */
+
+#display-completed::before,
+#display-highscore::before,
+#display-firsttyping::before {
+    content: "\2733";
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    color: var(--Red-500);
+    font-size: 1.1rem;
+}
+
+#display-completed::after,
+#display-highscore::after,
+#display-firsttyping::after {
+    content: "\2726";
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    color: var(--Yellow-400);
+    font-size: 1.4rem;
+}
+
+
+/* confetti */
+
+.confetti-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(500px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 14px;
+    top: -20px;
+    opacity: 0;
+    animation: confetti-fall 2.6s ease-in forwards;
+}
+
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 640px) {
+    html {
+        padding: 1.25rem;
+    }
+    .top-header {
+        margin-bottom: 1.25rem;
+    }
+    .logo-title .subtitle {
+        display: none;
+    }
+    .personal-best-result {
+        font-size: .8rem;
+    }
+    .status-and-select-difficulty {
+        flex-direction: column;
+        align-items: stretch;
+        gap: .75rem;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .status {
+        justify-content: space-between;
+        width: 100%;
+    }
+    .status>div {
+        padding: 0 .5rem;
+        text-align: center;
+    }
+    fieldset {
+        display: block;
+    }
+    fieldset legend {
+        display: none;
+    }
+    .mode-selector {
+        padding-left: 0;
+        border-left: none;
+    }
+    .difficulty-selector,
+    .mode-selector {
+        display: inline-block;
+        width: 48%;
+    }
+    .status-and-select-difficulty>fieldset.difficulty-selector {
+        margin-right: 4%;
+    }
+    /* collapse each button-group into a dropdown trigger */
+    .button-group {
+        position: relative;
+        display: block;
+        border: 1px solid var(--Neutral-700);
+        border-radius: var(--radius-btn);
+        background: var(--Neutral-900);
+    }
+    .button-group label {
+        display: none;
+        align-items: center;
+        gap: .5rem;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        justify-content: flex-start;
+        padding: .6rem .9rem;
+        background: var(--Neutral-900);
+    }
+    .button-group label::before {
+        content: "";
+        width: .85rem;
+        height: .85rem;
+        border-radius: 50%;
+        border: 1px solid var(--Neutral-500);
+        flex-shrink: 0;
+    }
+    input:checked+label::before {
+        border-color: var(--Blue-400);
+        background: radial-gradient(circle, var(--Blue-400) 45%, transparent 50%);
+    }
+    /* closed state: only show the checked option, as a chip with chevron */
+    .button-group:not(:focus-within) input:checked+label {
+        display: flex;
+        color: var(--Blue-400);
+        border-radius: var(--radius-btn);
+    }
+    .button-group:not(:focus-within) input:checked+label::before {
+        display: none;
+    }
+    .button-group:not(:focus-within) input:checked+label::after {
+        content: "\25BE";
+        margin-left: auto;
+        color: var(--Neutral-400);
+    }
+    /* open state: show full option list, like a dropdown menu */
+    .button-group:focus-within {
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        box-shadow: 0 10px 30px hsl(0, 0%, 0%, .5);
+    }
+    .button-group:focus-within label {
+        display: flex;
+        border-bottom: 1px solid var(--Neutral-800);
+    }
+    .button-group:focus-within label:last-of-type {
+        border-bottom: none;
+    }
+    .button-group:focus-within input:checked+label {
+        color: var(--Blue-400);
+    }
+    .typing-text {
+        font-size: 1.2rem;
+        line-height: 1.7;
+    }
+    .display-start {
+        padding: 0 1.5rem;
+    }
+    #display-completed,
+    #display-highscore,
+    #display-firsttyping {
+        padding: 2.5rem 1rem 3.5rem;
+    }
+    #display-completed h2,
+    #display-highscore h2,
+    #display-firsttyping h2 {
+        font-size: 1.5rem;
+    }
+    .typing-score {
+        flex-direction: column;
+        width: 100%;
+        gap: .75rem;
+    }
+    .score-box {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+.attribution {
+    margin: 1.5rem 0;
+}

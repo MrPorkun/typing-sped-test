@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+
+    <title>Frontend Mentor | Typing Speed Test</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Inconsolata:wght@200..900&family=Outfit:wght@100..900&family=Sora:wght@100..800&display=swap" rel="stylesheet">
+
+    <style>
+        .attribution {
+            font-size: 0.6875rem;
+            text-align: center;
+        }
+        
+        .attribution a {
+            color: hsl(228, 45%, 44%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="top-header">
+            <div class="logo-title">
+                <img class="logo" src="assets/images/logo-large.svg" alt="Typing Speed Test logo">
+            </div>
+
+            <div class="personal-best">
+                <img src="assets/images/icon-personal-best.svg" alt="">
+                <span class="personal-best-result">Personal best: <span id="personal-best-value">0</span> WPM</span>
+            </div>
+        </header>
+
+        <main class="typing-content">
+
+            <div class="status-and-select-difficulty">
+                <div class="status">
+                    <div class="wpm">WPM: <span id="wpm-stats" class="font-stats">0</span></div>
+                    <div class="accuracy">Accuracy: <span id="accuracy-stats" class="font-stats">0%</span></div>
+                    <div class="time">Time: <span id="time-stats" class="font-stats">0:60</span></div>
+                </div>
+
+                <fieldset class="difficulty-selector">
+                    <legend>Difficulty:</legend>
+                    <div class="button-group">
+                        <input type="radio" id="easy" name="difficulty" value="easy" class="sr-only">
+                        <label for="easy" class="difficulty-btn">Easy</label>
+
+                        <input type="radio" id="medium" name="difficulty" value="medium" class="sr-only">
+                        <label for="medium" class="difficulty-btn">Medium</label>
+
+                        <input type="radio" id="hard" name="difficulty" value="hard" class="sr-only" checked>
+                        <label for="hard" class="difficulty-btn">Hard</label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="mode-selector">
+                    <legend>Mode:</legend>
+                    <div class="button-group">
+                        <input type="radio" id="timed" name="mode" value="timed" class="sr-only" checked>
+                        <label for="timed" class="mode-btn">Timed (60s)</label>
+
+                        <input type="radio" id="passage" name="mode" value="passage" class="sr-only">
+                        <label for="passage" class="mode-btn">Passage</label>
+                    </div>
+                </fieldset>
+
+
+            </div>
+
+            <div class="typing-area ">
+                <div id="typing-text" class="typing-text" tabindex="0"></div>
+                <input id="typing-input" class="typing-input sr-only" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Typing input">
+
+                <div id="display-start" class="display-start">
+                    <button id="start-typing" class="start-typing" type="button">Start Typing Test</button>
+                    <p>Or click the text and start typing</p>
+                </div>
+            </div>
+
+            <button id="restart-test" class="restart-test hidden" type="button">
+                Restart Test <span><img src="assets/images/icon-restart.svg" alt=""></span>
+            </button>
+
+            <div id="display-completed" class="display-completed hidden">
+                <img id="result-icon" class="result-icon" src="assets/images/icon-completed.svg" alt="">
+                <h2 id="result-title">Test Complete!</h2>
+                <p id="result-subtitle">Solid run. Keep pushing to beat your high score.</p>
+
+                <div class="typing-score">
+                    <div class="score-box">
+                        <p class="score-label">WPM:</p>
+                        <p id="wpm-result" class="score-value">0</p>
+                    </div>
+                    <div class="score-box">
+                        <p class="score-label">Accuracy:</p>
+                        <p id="accuracy-result" class="score-value score-accuracy">0%</p>
+                    </div>
+                    <div class="score-box">
+                        <p class="score-label">Characters:</p>
+                        <p id="characters-result" class="score-value">
+                            <span id="characters-correct" class="chars-correct">0</span>/<span id="characters-incorrect" class="chars-incorrect">0</span>
+                        </p>
+                    </div>
+                </div>
+
+                <button id="go-typing-again" class="go-typing-again" type="button">
+                    <span id="go-again-label">Go Again</span> <span><img src="assets/images/icon-restart.svg" alt=""></span>
+                </button>
+
+
+            </div>
+
+            <div id="display-highscore" class="display-highscore hidden">
+                <img id="highscore-result-icon" class="result-icon" src="assets/images/icon-new-pb.svg" alt="">
+                <h2 id="display-highscore-result-title">High Score Smashed!</h2>
+                <p id="display-highscore-result-subtitle">You're getting faster, That was incredible typing.</p>
+
+                <div class="typing-score">
+                    <div class="score-box">
+                        <p class="score-label">WPM:</p>
+                        <p id="display-highscore-wpm-result" class="score-value">0</p>
+                    </div>
+                    <div class="score-box">
+                        <p class="score-label">Accuracy:</p>
+                        <p id="display-highscore-accuracy-result" class="score-value score-accuracy">0%</p>
+                    </div>
+                    <div class="score-box">
+                        <p class="score-label">Characters:</p>
+                        <p id="display-highscore-characters-result" class="score-value">
+                            <span id="display-highscore-characters-correct" class="chars-correct">0</span>/<span id="highscore-characters-incorrect" class="chars-incorrect">0</span>
+                        </p>
+                    </div>
+                </div>
+
+                <button id="beat-this-score" class="beat-this-score" type="button">
+                    <span id="beat-this-score-laber">Beat this Score</span> <span><img src="assets/images/icon-restart.svg" alt=""></span>
+                </button>
+
+                <div id="confetti-container" class="confetti-container hidden"></div>
+            </div>
+
+            <div id="display-firsttyping" class="display-firsttyping hidden">
+                <img id="firsttyping-result-icon" class="result-icon" src="assets/images/icon-completed.svg" alt="">
+                <h2 id="display-firsttyping-result-title">Baseline Established!</h2>
+                <p id="display-firsttyping-result-subtitle">You're set the bar, Now the real challenge begin---time to beat it.</p>
+
+                <div class="typing-score">
+                    <div class="score-box">
+                        <p class="score-label">WPM:</p>
+                        <p id="display-firsttyping-wpm-result" class="score-value">0</p>
+                    </div>
+                    <div class="score-box">
+                        <p class="score-label">Accuracy:</p>
+                        <p id="display-firsttyping-accuracy-result" class="score-value score-accuracy">0%</p>
+                    </div>
+                    <div class="score-box">
+                        <p class="score-label">Characters:</p>
+                        <p id="display-firsttyping-characters-result" class="score-value">
+                            <span id="display-firsttyping-characters-correct" class="chars-correct">0</span>/<span id="firsttyping-characters-incorrect" class="chars-incorrect">0</span>
+                        </p>
+                    </div>
+                </div>
+
+                <button id="firsttyping" class="firsttyping" type="button">
+                    <span id="firsttyping-laber">Beat this Score</span> <span><img src="assets/images/icon-restart.svg" alt=""></span>
+                </button>
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="app.js"></script>
+    <footer class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. Coded by <a href="https://www.frontendmentor.io/profile/MrPorkun">MrPorkun</a>.
+    </footer>
+</body>
+
+</html>
